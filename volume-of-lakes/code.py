@@ -12,9 +12,9 @@ def calculate_volume(arr=heights):
     max_value_right = arr[-1]
 
     # Traversing List from Start and End and exit when start reaches end
-    while left <= right:
+    while left < right:
         # Calculate volume while traversing
-        if max_value_left <= max_value_right:
+        if arr[left] <= arr[right]:
             if(arr[left] > max_value_left):
                 max_value_left = arr[left]
             else:
