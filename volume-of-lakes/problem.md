@@ -22,9 +22,9 @@ This question offers practice with algorithms, data structures, Big-O, defining 
 
 The solution steps are:
 
-1. Find the index of maximum height from heights array/list
+1. Traverse from start and end of heights list/array.
 
-2. Traverse from start and end of heights list/array till the index of maximum height.
+2. Increment/Decrement the pointer with less height
 
 3. Calculate volume while traversing accordingly.
 
