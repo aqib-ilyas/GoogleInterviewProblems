@@ -1,38 +1,46 @@
 ''' This is a sample input, you can change it of course
     but you have to follow rules of the questions '''
 
-compressed_string = "2[1[b]10[c]]a"
+compressed_string = "2a2[3[[c]]2[b]]3a"
 
 
 def decompress(str=compressed_string):
     string = ""
-    number_stack = []
-    replace_index_stack = []
-    bracket_index_stack = []
+    number = []
+    temp_dig = ""
+    multiply = 0
     i = 0
     while i < len(str):
         if str[i] == "[":
-            # storing indexes in coressponding stacks
-            replace_index_stack.insert(0, i - len(string))
-            number_stack.insert(0, int(string))
-            bracket_index_stack.insert(0, i+1)
-            string = ""
+            multiply += 1
+            if len(temp_dig) > 0:
+                number.append(int(temp_dig))
+                temp_dig = ""
+            else:
+                number.append(1)
         elif str[i] == "]":
-            # updating base string with uncompressed part
-            temp = str[bracket_index_stack[0]:i] * number_stack[0]
-            str = str.replace(str[replace_index_stack[0]:i+1], temp)
-            # updating index to next position from decompressed part
-            i = replace_index_stack[0]+len(temp)
-            # poping the top item from stacks which is used already
-            number_stack.pop(0)
-            replace_index_stack.pop(0)
-            bracket_index_stack.pop(0)
-            string = ""
-            continue
+            if len(number) > 0:
+                number.pop()
+            multiply -= 1
         else:
-            string += str[i]
+            if(str[i].isdigit()):
+                temp_dig += str[i]
+            else:
+
+                if(multiply > 0 or len(temp_dig) > 0):
+                    j = multiply-1
+                    Value = 1
+                    while j >= 0 and number[j] is not None:
+                        Value *= number[j]
+                        j -= 1
+                    temp = int(temp_dig) if len(temp_dig) > 0 else 1
+                    string += (Value*temp)*str[i]
+                    temp_dig = ""
+                else:
+                    string += str[i]
+
         i += 1
-    return str
+    return string
 
 
 print(decompress())
